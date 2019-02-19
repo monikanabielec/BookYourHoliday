@@ -24,4 +24,3 @@ namespace BookYourHoliday.Models
         }
     }
 }
-}

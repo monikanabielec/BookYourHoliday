@@ -20,6 +20,9 @@ namespace BookYourHoliday.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<HotelTypes> HotelTypes { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

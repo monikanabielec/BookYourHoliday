@@ -9,8 +9,9 @@ namespace BookYourHoliday.Models
     public class Reservation
     {
         public int Id { get; set; }
-        public int HotelId { get; set; }
+        //public int HotelId { get; set; }
 
+        public  HotelTypes HotelTypes { get; set; }
         [Display(Name = "Arrival Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
@@ -24,7 +25,7 @@ namespace BookYourHoliday.Models
         public string Status { get; set; }
         public string Reference { get; set; }
 
-        public virtual HotelTypes HotelTypes { get; set; }
+
 
     }
 }

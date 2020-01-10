@@ -7,9 +7,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BookYourHoliday.Models;
+using System.Xml.Serialization;
 
 namespace BookYourHoliday.Controllers
 {
+    /// <summary>
+    /// Controller class which is responsible for managing data of people registered to booking app
+    /// </summary>
     [Authorize]
     public class ManageController : Controller
     {
@@ -49,7 +53,14 @@ namespace BookYourHoliday.Controllers
                 _userManager = value;
             }
         }
-
+        /// <summary>
+        /// Returtns notifications
+        /// </summary>
+        /// <param name="message">Messages to return</param>
+        /// <returns>
+        /// Returns appropriate mssage according to specific situation
+        /// Eg. Info about password change,adding telephonme nunber etc.
+        /// </returns>
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
@@ -72,9 +83,19 @@ namespace BookYourHoliday.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+
+            if (ModelState.IsValid)
+            {
+
+            }
             return View(model);
         }
-
+        /// <summary>
+        /// Responsible for removing login from booking app
+        /// </summary>
+        /// <param name="loginProvider"></param>
+        /// <param name="providerKey"></param>
+        /// <returns>Deletion of selected loging</returns>
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
@@ -98,14 +119,21 @@ namespace BookYourHoliday.Controllers
             }
             return RedirectToAction("ManageLogins", new { Message = message });
         }
-
+        /// <summary>
+        /// Adds telephone number
+        /// </summary>
+        /// <returns>View tith telephone number added</returns>
         //
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
-
+        /// <summary>
+        ///  Adds telephone number
+        /// </summary>
+        /// <param name="model">Use appropriate ViewModel</param>
+        /// <returns>Telephone number which was added to user account</returns>
         //
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
@@ -129,7 +157,10 @@ namespace BookYourHoliday.Controllers
             }
             return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
         }
-
+        /// <summary>
+        /// Enables two factor authentication
+        /// </summary>
+        /// <returns>Authenticated use by unique Id</returns>
         //
         // POST: /Manage/EnableTwoFactorAuthentication
         [HttpPost]
@@ -144,7 +175,10 @@ namespace BookYourHoliday.Controllers
             }
             return RedirectToAction("Index", "Manage");
         }
-
+        /// <summary>
+        /// Disable two factor authentication
+        /// </summary>
+        /// <returns></returns>
         //
         // POST: /Manage/DisableTwoFactorAuthentication
         [HttpPost]
@@ -159,7 +193,11 @@ namespace BookYourHoliday.Controllers
             }
             return RedirectToAction("Index", "Manage");
         }
-
+        /// <summary>
+        /// Verifies phone number if its correct
+        /// </summary>
+        /// <param name="phoneNumber">String patameter which holds telephone number</param>
+        /// <returns>Verification if the telephone number was correct</returns>
         //
         // GET: /Manage/VerifyPhoneNumber
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
@@ -193,7 +231,10 @@ namespace BookYourHoliday.Controllers
             ModelState.AddModelError("", "Failed to verify phone");
             return View(model);
         }
-
+        /// <summary>
+        /// Removes phone number
+        /// </summary>
+        /// <returns>Deletion of telephone number</returns>
         //
         // POST: /Manage/RemovePhoneNumber
         [HttpPost]
@@ -219,7 +260,11 @@ namespace BookYourHoliday.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// Changes password created
+        /// </summary>
+        /// <param name="model">model class responsible for changing password</param>
+        /// <returns>Password change in the application</returns>
         //
         // POST: /Manage/ChangePassword
         [HttpPost]
@@ -250,7 +295,11 @@ namespace BookYourHoliday.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// Sets appropriate password to the application
+        /// </summary>
+        /// <param name="model">Use view model responsible for setting the password </param>
+        /// <returns>Created - set password</returns>
         //
         // POST: /Manage/SetPassword
         [HttpPost]

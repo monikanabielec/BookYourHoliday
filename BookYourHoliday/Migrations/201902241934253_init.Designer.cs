@@ -13,7 +13,7 @@ namespace BookYourHoliday.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201902192024019_init"; }
+            get { return "201902241934253_init"; }
         }
         
         string IMigrationMetadata.Source
